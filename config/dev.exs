@@ -7,7 +7,9 @@ config :cbs, Cbs.Repo,
   database: "cbs_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 10,
+  issuer: "cbs",
+  secret_key: "WPF45iUdP1enEu3qYM04PHV2uJTvygCeZiSR/vTeZuMxOodPEBOk/nSPBYV4pklV"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -17,7 +19,7 @@ config :cbs, Cbs.Repo,
 # with webpack to recompile .js and .css sources.
 config :cbs, CbsWeb.Endpoint,
   http: [port: 4000],
-  debug_errors: false,
+  debug_errors: true,
   code_reloader: true,
   check_origin: false,
   watchers: []

@@ -5,7 +5,7 @@ defmodule Cbs.Main.Accounts do
   schema "accounts" do
     field :description, :string
     field :routing_number, :binary_id
-    belongs_to :user, User
+    # belongs_to :user, User
 
     timestamps()
   end
