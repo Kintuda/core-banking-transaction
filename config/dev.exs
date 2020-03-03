@@ -57,3 +57,13 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :cbs, Cbs.Guardian,
+  issuer: "cbs",
+  secret_key_base: "qOyl4LLUIzQKOjboGlahQOiA7ggE8AqWMs8BwpBqLivWlDvtOoMyubk72iEaeBVt",
+  secret_key: "qOyl4LLUIzQKOjboGlahQOiA7ggE8AqWMs8BwpBqLivWlDvtOoMyubk72iEaeBVt"
+
+config :cbs, CbsWeb.Guardian,
+  issuer: "cbs",
+  secret_key_base: "qOyl4LLUIzQKOjboGlahQOiA7ggE8AqWMs8BwpBqLivWlDvtOoMyubk72iEaeBVt",
+  secret_key: "qOyl4LLUIzQKOjboGlahQOiA7ggE8AqWMs8BwpBqLivWlDvtOoMyubk72iEaeBVt"

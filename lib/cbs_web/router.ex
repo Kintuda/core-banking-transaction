@@ -8,6 +8,8 @@ defmodule CbsWeb.Router do
   scope "/api/v1", CbsWeb do
     pipe_through :api
 
+    post "/login", UserController, :login
+
     resources "/users", UserController
     resources "/adress", AdressController
     resources "/accounts", AccountsController

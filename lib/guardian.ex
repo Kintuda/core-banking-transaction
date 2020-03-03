@@ -1,12 +1,12 @@
-defmodule Cbs.Main.Guardian do
-  use Guardian, opt_app: :cbs
+defmodule Cbs.Guardian do
+  use Guardian, otp_app: :cbs
 
   def subject_for_token(user, _claims) do
     {:ok, to_string(user.id)}
   end
 
   def resource_from_claims(%{"sub" => id}) do
-    user = User.get_user!(id)
+    user = Cbs.Main.get_user!(id)
     {:ok, user}
   rescue
     Ecto.NoResultsError -> {:error, :resource_not_found}

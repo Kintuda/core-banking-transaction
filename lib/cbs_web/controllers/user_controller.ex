@@ -40,4 +40,16 @@ defmodule CbsWeb.UserController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def login(conn, %{"user" => %{"username" => username, "password" => password}}) do
+    # data =
+    with {:ok, token, _claims} <- Main.authenticate_user(username, password), do:
+      conn |> render("jwt.json", jwt: token)
+
+
+    # IO.inspect data
+    # {:ok, jwt} = data
+    # render(conn, "show.json", "")
+    # send_resp(conn, :no_content, jwt)
+  end
 end

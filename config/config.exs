@@ -13,7 +13,6 @@ config :cbs,
 # Configures the endpoint
 config :cbs, CbsWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "qOyl4LLUIzQKOjboGlahQOiA7ggE8AqWMs8BwpBqLivWlDvtOoMyubk72iEaeBVt",
   render_errors: [view: CbsWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: Cbs.PubSub, adapter: Phoenix.PubSub.PG2]
 
@@ -24,6 +23,17 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :cbs, Cbs.Guardian,
+  issuer: "cbs",
+  secret_key_base: "qOyl4LLUIzQKOjboGlahQOiA7ggE8AqWMs8BwpBqLivWlDvtOoMyubk72iEaeBVt",
+  secret_key: "qOyl4LLUIzQKOjboGlahQOiA7ggE8AqWMs8BwpBqLivWlDvtOoMyubk72iEaeBVt"
+
+
+config :cbs, CbsWeb.Guardian,
+  issuer: "cbs",
+  secret_key_base: "qOyl4LLUIzQKOjboGlahQOiA7ggE8AqWMs8BwpBqLivWlDvtOoMyubk72iEaeBVt",
+  secret_key: "qOyl4LLUIzQKOjboGlahQOiA7ggE8AqWMs8BwpBqLivWlDvtOoMyubk72iEaeBVt"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
