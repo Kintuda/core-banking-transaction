@@ -24,10 +24,12 @@ defmodule Cbs.Main.User do
     |> put_password_hash()
   end
 
-  defp put_password_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    change(changeset, password: Argon2.hash_pwd_salt(password))
+  defp put_password_hash(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
+        put_change(changeset, :password, Bcrypt.hash_pwd_salt(pass))
+      _ ->
+        changeset
+    end
   end
-
-  defp put_password_hash(changeset), do: changeset
-
 end

@@ -492,13 +492,9 @@ defmodule Cbs.Main do
     query = from u in User, where: u.username == ^username
     case Repo.one(query) do
       nil ->
-        Argon2.no_user_verify()
         {:error, :invalid_credentials}
       user ->
-        if Argon2.verify_pass(plain_text_password, user.password) do
-          # {:ok, jwt } = Guardian.encode_and_sign(user
-          # user
-
+        if Bcrypt.verify_pass(plain_text_password, user.password) do
           Cbs.Guardian.encode_and_sign(user)
         else
           {:error, :invalid_credentials}
