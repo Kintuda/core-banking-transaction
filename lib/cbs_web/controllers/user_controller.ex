@@ -1,8 +1,12 @@
 defmodule CbsWeb.UserController do
   use CbsWeb, :controller
 
+  alias Ecto.Changeset
+  # alias Plug.Conn
   alias Cbs.Main
   alias Cbs.Main.User
+  alias CbsWeb.ErrorHelpers
+
 
   action_fallback CbsWeb.FallbackController
 
@@ -12,11 +16,23 @@ defmodule CbsWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Main.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
+    conn
+    |> Pow.Plug.create_user(user_params)
+    |> case do
+      {:ok, _user, conn} ->
+        json(conn, %{
+          data: %{
+            token: conn.private[:api_auth_token],
+            renew_token: conn.private[:api_renew_token]
+          }
+        })
+
+      {:error, changeset, conn} ->
+        errors = Changeset.traverse_errors(changeset, &ErrorHelpers.translate_error/1)
+
+        conn
+        |> put_status(500)
+        |> json(%{error: %{status: 500, message: "Couldn't create user", errors: errors}})
     end
   end
 
@@ -42,14 +58,7 @@ defmodule CbsWeb.UserController do
   end
 
   def login(conn, %{"user" => %{"username" => username, "password" => password}}) do
-    # data =
-    with {:ok, token, _claims} <- Main.authenticate_user(username, password), do:
-      conn |> render("jwt.json", jwt: token)
-
-
-    # IO.inspect data
-    # {:ok, jwt} = data
-    # render(conn, "show.json", "")
-    # send_resp(conn, :no_content, jwt)
+    with {:ok, token, _claims} <- Main.authenticate_user(username, password),
+         do: conn |> render("jwt.json", acess_token: token)
   end
 end

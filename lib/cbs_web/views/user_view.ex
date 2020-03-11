@@ -19,7 +19,7 @@ defmodule CbsWeb.UserView do
       email: user.email}
   end
 
-  def render("jwt.json", %{jwt: jwt}) do
-    %{jwt: jwt}
+  def render("jwt.json", %{acess_token: token}) do
+    %{acess_token: token}
   end
 end

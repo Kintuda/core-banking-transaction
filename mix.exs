@@ -42,7 +42,9 @@ defmodule Cbs.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:guardian, "~> 2.0"},
-      {:bcrypt_elixir, "~> 2.2"}
+      {:bcrypt_elixir, "~> 2.2"},
+      {:argon2_elixir, "~> 2.3"},
+      {:pow, "~> 1.0.18"}
     ]
   end
 

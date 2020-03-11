@@ -494,7 +494,7 @@ defmodule Cbs.Main do
       nil ->
         {:error, :invalid_credentials}
       user ->
-        if Bcrypt.verify_pass(plain_text_password, user.password) do
+        if Argon2.check_pass(plain_text_password, user.password) do
           Cbs.Guardian.encode_and_sign(user)
         else
           {:error, :invalid_credentials}
